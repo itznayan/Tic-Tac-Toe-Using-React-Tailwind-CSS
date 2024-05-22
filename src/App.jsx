@@ -4,6 +4,8 @@ import Box from "./components/Box";
 const App = () => {
   const [state, setState] = useState(Array(9).fill(null));
   const [isXTurn, setIsXTurn] = useState(true);
+
+  //check winner logic for declaration of winner
   const checkWinner = () => {
     const winnerLogic = [
       [0, 1, 2],
@@ -15,8 +17,14 @@ const App = () => {
       [0, 4, 8],
       [2, 4, 6],
     ];
+
+    //its a for of loop used to derive value from winner combos
+
     for (let logic of winnerLogic) {
       const [a, b, c] = logic;
+
+      //its check the box is empty or winner logic matches or not. above used array destructuring. if its matches its return true otherwise false
+
       if (state[a] !== null && state[a] === state[b] && state[a] === state[c]) {
         return state[a];
       }
@@ -24,14 +32,20 @@ const App = () => {
     return false;
   };
 
+  // function run for check winner
   const isWinner = checkWinner();
 
+  //click function to register X or 0
+
   const handleClick = (index) => {
+    //its logic to not re-enter not null box
     if (state[index] !== null) {
       return;
     }
+    //its copy of main state for selection
     const copyState = [...state];
     copyState[index] = isXTurn ? "X" : "0";
+    //updation of state
     setState(copyState);
     setIsXTurn(!isXTurn);
   };
